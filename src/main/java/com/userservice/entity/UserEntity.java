@@ -1,6 +1,13 @@
 package com.userservice.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,7 +16,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +39,10 @@ public class User {
         createdAt = LocalDateTime.now();
     }
 
-    public User() {
+    public UserEntity() {
     }
 
-    public User(String name, String email, Integer age) {
+    public UserEntity(String name, String email, Integer age) {
         this.name = name;
         this.email = email;
         this.age = age;
@@ -85,9 +92,9 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && 
-               Objects.equals(email, user.email);
+        UserEntity userEntity = (UserEntity) o;
+        return Objects.equals(id, userEntity.id) &&
+               Objects.equals(email, userEntity.email);
     }
 
     @Override

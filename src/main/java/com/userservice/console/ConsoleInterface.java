@@ -1,6 +1,6 @@
 package com.userservice.console;
 
-import com.userservice.entity.User;
+import com.userservice.entity.UserEntity;
 import com.userservice.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,8 +104,8 @@ public class ConsoleInterface {
             String email = readStringInput("Введите email: ");
             Integer age = readOptionalIntInput("Введите возраст (Enter чтобы пропустить): ");
 
-            User user = userService.createUser(name, email, age);
-            System.out.println("Пользователь создан: " + user);
+            UserEntity userEntity = userService.createUser(name, email, age);
+            System.out.println("Пользователь создан: " + userEntity);
 
         } catch (IllegalArgumentException e) {
             logger.error("Error validation user", e);
@@ -122,7 +122,7 @@ public class ConsoleInterface {
 
         try {
             long id = readLongInput("Введите ID: ");
-            Optional<User> user = userService.getUserById(id);
+            Optional<UserEntity> user = userService.getUserById(id);
 
             if (user.isPresent()) {
                 System.out.println("Найден пользователь: " + user.get());
@@ -143,7 +143,7 @@ public class ConsoleInterface {
 
         try {
             String email = readStringInput("Введите email: ");
-            Optional<User> user = userService.getUserByEmail(email);
+            Optional<UserEntity> user = userService.getUserByEmail(email);
 
             if (user.isPresent()) {
                 System.out.println("Найден пользователь: " + user.get());
@@ -163,13 +163,13 @@ public class ConsoleInterface {
         System.out.println("\n--- Все пользователи ---");
 
         try {
-            List<User> users = userService.getAllUsers();
+            List<UserEntity> userEntities = userService.getAllUsers();
 
-            if (users.isEmpty()) {
+            if (userEntities.isEmpty()) {
                 System.out.println("Список пользователей пуст");
             } else {
-                System.out.println("Найдено пользователей: " + users.size());
-                users.forEach(System.out::println);
+                System.out.println("Найдено пользователей: " + userEntities.size());
+                userEntities.forEach(System.out::println);
             }
 
         } catch (Exception e) {
@@ -187,7 +187,7 @@ public class ConsoleInterface {
             long id = readLongInput("Введите ID пользователя: ");
 
             // Проверка существования
-            Optional<User> existingUser = userService.getUserById(id);
+            Optional<UserEntity> existingUser = userService.getUserById(id);
             if (existingUser.isEmpty()) {
                 System.out.println("Пользователь с ID " + id + " не найден");
 
@@ -200,7 +200,7 @@ public class ConsoleInterface {
             String email = readStringInput("Введите новый email: ");
             Integer age = readOptionalIntInput("Введите новый возраст (Enter чтобы пропустить): ");
 
-            User updated = userService.updateUser(id, name, email, age);
+            UserEntity updated = userService.updateUser(id, name, email, age);
             System.out.println("Пользователь обновлен: " + updated);
 
         } catch (IllegalArgumentException e) {

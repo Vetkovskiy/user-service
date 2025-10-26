@@ -1,6 +1,7 @@
 package com.userservice.dao;
 
-import com.userservice.entity.User;
+import com.userservice.entity.UserEntity;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,37 +12,37 @@ public interface UserDAO {
     
     /**
      * Создать нового пользователя
-     * @param user пользователь для создания
+     * @param userEntity пользователь для создания
      * @return созданный пользователь с присвоенным ID
      */
-    User create(User user);
+    UserEntity create(UserEntity userEntity);
     
     /**
      * Найти пользователя по ID
      * @param id идентификатор пользователя
      * @return Optional с пользователем или пустой Optional
      */
-    Optional<User> findById(Long id);
+    Optional<UserEntity> findById(Long id);
     
     /**
      * Найти пользователя по email
      * @param email email пользователя
      * @return Optional с пользователем или пустой Optional
      */
-    Optional<User> findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
     
     /**
      * Получить всех пользователей
      * @return список всех пользователей
      */
-    List<User> findAll();
+    List<UserEntity> findAll();
     
     /**
      * Обновить существующего пользователя
-     * @param user пользователь с обновленными данными
+     * @param userEntity пользователь с обновленными данными
      * @return обновленный пользователь
      */
-    User update(User user);
+    UserEntity update(UserEntity userEntity);
     
     /**
      * Удалить пользователя по ID

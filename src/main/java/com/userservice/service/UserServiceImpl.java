@@ -1,7 +1,7 @@
 package com.userservice.service;
 
 import com.userservice.dao.UserDAO;
-import com.userservice.entity.User;
+import com.userservice.entity.UserEntity;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(String name, String email, Integer age) {
+    public UserEntity createUser(String name, String email, Integer age) {
         logger.debug("Creating user: name={}, email={}, age={}", name, email, age);
         
         // Валидация входных данных
@@ -37,10 +37,10 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("User with email " + email + " already exists");
         }
         
-        User user = new User(name, email, age);
+        UserEntity userEntity = new UserEntity(name, email, age);
 
         try {
-            return userDAO.create(user);
+            return userDAO.create(userEntity);
         } catch (ConstraintViolationException e) {
             logger.warn("Email already exists");
             throw new IllegalArgumentException("Email already exists");
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserById(Long id) {
+    public Optional<UserEntity> getUserById(Long id) {
         if (id == null || id <= 0) {
             logger.warn("Invalid user ID: {}", id);
             throw new IllegalArgumentException("User ID must be positive");
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
+    public Optional<UserEntity> getUserByEmail(String email) {
         if (email == null || email.trim().isEmpty()) {
             logger.warn("Empty email provided");
             throw new IllegalArgumentException("Email cannot be empty");
@@ -67,12 +67,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userDAO.findAll();
     }
 
     @Override
-    public User updateUser(Long id, String name, String email, Integer age) {
+    public UserEntity updateUser(Long id, String name, String email, Integer age) {
         logger.debug("Updating user: id={}, name={}, email={}, age={}", id, name, email, age);
         
         if (id == null || id <= 0) {
@@ -80,14 +80,14 @@ public class UserServiceImpl implements UserService {
         }
         
         // Проверка существования пользователя
-        User existingUser = userDAO.findById(id)
+        UserEntity existingUserEntity = userDAO.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("User with ID " + id + " not found"));
         
         // Валидация новых данных
         validateUserData(name, email, age);
         
         // Проверка уникальности email (если изменился)
-        if (!existingUser.getEmail().equals(email)) {
+        if (!existingUserEntity.getEmail().equals(email)) {
             if (userDAO.existsByEmail(email)) {
                 logger.warn("Attempt to update user with existing email: {}", email);
                 throw new IllegalArgumentException("User with email " + email + " already exists");
@@ -95,11 +95,11 @@ public class UserServiceImpl implements UserService {
         }
         
         // Обновление данных
-        existingUser.setName(name);
-        existingUser.setEmail(email);
-        existingUser.setAge(age);
+        existingUserEntity.setName(name);
+        existingUserEntity.setEmail(email);
+        existingUserEntity.setAge(age);
         
-        return userDAO.update(existingUser);
+        return userDAO.update(existingUserEntity);
     }
 
     @Override

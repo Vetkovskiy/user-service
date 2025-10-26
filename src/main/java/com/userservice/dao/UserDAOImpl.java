@@ -1,6 +1,6 @@
 package com.userservice.dao;
 
-import com.userservice.entity.User;
+import com.userservice.entity.UserEntity;
 import com.userservice.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,19 +26,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User create(User user) {
+    public UserEntity create(UserEntity userEntity) {
         Transaction transaction = null;
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            session.persist(user);
+            session.persist(userEntity);
             transaction.commit();
 
-            logger.info("User created successfully: {}", user.getId());
+            logger.info("User created successfully: {}", userEntity.getId());
 
-            return user;
-
+            return userEntity;
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
@@ -50,18 +49,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
+    public Optional<UserEntity> findById(Long id) {
         Transaction transaction = null;
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            User user = session.find(User.class, id);
+            UserEntity userEntity = session.find(UserEntity.class, id);
             transaction.commit();
-            logger.debug("Find by id {}: {}", id, user != null ? "found" : "not found");
+            logger.debug("Find by id {}: {}", id, userEntity != null ? "found" : "not found");
 
-            return Optional.ofNullable(user);
-
+            return Optional.ofNullable(userEntity);
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
@@ -73,21 +71,20 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<UserEntity> findByEmail(String email) {
         Transaction transaction = null;
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            Query<User> query = session.createQuery(
-                    "FROM User u WHERE u.email = :email", User.class);
+            Query<UserEntity> query = session.createQuery(
+                    "FROM UserEntity u WHERE u.email = :email", UserEntity.class);
             query.setParameter("email", email);
-            User user = query.uniqueResult();
+            UserEntity userEntity = query.uniqueResult();
             transaction.commit();
-            logger.debug("Find by email {}: {}", email, user != null ? "found" : "not found");
+            logger.debug("Find by email {}: {}", email, userEntity != null ? "found" : "not found");
 
-            return Optional.ofNullable(user);
-
+            return Optional.ofNullable(userEntity);
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
@@ -99,19 +96,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<UserEntity> findAll() {
         Transaction transaction = null;
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            Query<User> query = session.createQuery("FROM User u ORDER BY u.id", User.class);
-            List<User> users = query.list();
-            logger.debug("Found {} users", users.size());
+            Query<UserEntity> query = session.createQuery("FROM UserEntity u ORDER BY u.id", UserEntity.class);
+            List<UserEntity> userEntities = query.list();
+            logger.debug("Found {} users", userEntities.size());
             transaction.commit();
 
-            return users;
-
+            return userEntities;
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
@@ -124,18 +120,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User update(User user) {
+    public UserEntity update(UserEntity userEntity) {
         Transaction transaction = null;
 
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            User mergedUser = session.merge(user);
+            UserEntity mergedUserEntity = session.merge(userEntity);
             transaction.commit();
-            logger.info("User updated successfully: {}", user.getId());
+            logger.info("User updated successfully: {}", userEntity.getId());
 
-            return mergedUser;
-
+            return mergedUserEntity;
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
@@ -153,9 +148,9 @@ public class UserDAOImpl implements UserDAO {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            User user = session.find(User.class, id);
-            if (user != null) {
-                session.remove(user);
+            UserEntity userEntity = session.find(UserEntity.class, id);
+            if (userEntity != null) {
+                session.remove(userEntity);
                 transaction.commit();
                 logger.info("User deleted successfully: {}", id);
 
@@ -185,7 +180,7 @@ public class UserDAOImpl implements UserDAO {
             transaction = session.beginTransaction();
 
             Query<Long> query = session.createQuery(
-                    "SELECT COUNT(u) FROM User u WHERE u.email = :email", Long.class);
+                    "SELECT COUNT(u) FROM UserEntity u WHERE u.email = :email", Long.class);
             query.setParameter("email", email);
 
             Long count = query.uniqueResult();
@@ -194,7 +189,6 @@ public class UserDAOImpl implements UserDAO {
             logger.debug("Email {} exists: {}", email, exists);
 
             return exists;
-
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();

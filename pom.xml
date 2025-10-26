@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.userservice</groupId>
-    <artifactId>user-service</artifactId>
+    <artifactId>userEntity-service</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -17,6 +17,10 @@
         <hibernate.version>7.1.4.Final</hibernate.version>
         <postgresql.version>42.7.8</postgresql.version>
         <logback.version>1.5.20</logback.version>
+        <jakarta.persistence-api.version>3.2.0</jakarta.persistence-api.version>
+        <slf4j-api.version>2.0.9</slf4j-api.version>
+        <HikariCP.version>5.1.0</HikariCP.version>
+        <hibernate-hikaricp.version>7.1.4.Final</hibernate-hikaricp.version>
     </properties>
 
     <dependencies>
@@ -41,31 +45,31 @@
             <version>${logback.version}</version>
         </dependency>
 
-        <!-- SLF4J API (уже включен в logback-classic, но явно указываем) -->
+        <!-- SLF4J API -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.9</version>
+            <version>${slf4j-api.version}</version>
         </dependency>
 
-        <!-- Jakarta Persistence API (JPA) - используется Hibernate -->
+        <!-- Jakarta Persistence API (JPA) -->
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.2.0</version>
+            <version>${jakarta.persistence-api.version}</version>
         </dependency>
 
         <!-- HikariCP -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>5.1.0</version>
+            <version>${HikariCP.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-hikaricp</artifactId>
-            <version>7.1.4.Final</version>
+            <version>${hibernate-hikaricp.version}</version>
         </dependency>
 
     </dependencies>
