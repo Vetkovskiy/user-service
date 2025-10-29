@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.userservice</groupId>
-    <artifactId>userEntity-service</artifactId>
+    <artifactId>user-service</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 

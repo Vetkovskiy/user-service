@@ -11,7 +11,7 @@
 
         <property name="hibernate.hikari.dataSourceClassName">org.postgresql.ds.PGSimpleDataSource</property>
         <property name="hibernate.hikari.dataSource.url">jdbc:postgresql://localhost:5432/userdb</property>
-        <property name="hibernate.hikari.dataSource.userEntity">admin</property>
+        <property name="hibernate.hikari.dataSource.user">admin</property>
         <property name="hibernate.hikari.dataSource.password">admin123</property>
 
         <property name="hibernate.hikari.maximumPoolSize">10</property>
