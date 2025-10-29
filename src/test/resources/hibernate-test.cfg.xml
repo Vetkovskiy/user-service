@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- 
+            ВАЖНО: URL, username, password будут переопределены в тестах
+            через Testcontainers программно 
+        -->
+
+        <!-- Database connection settings (placeholder) -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <!-- Эти значения будут заменены в BaseIntegrationTest -->
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/testdb</property>
+        <property name="hibernate.connection.username">test</property>
+        <property name="hibernate.connection.password">test</property>
+
+        <!-- JDBC connection pool settings -->
+        <property name="hibernate.connection.pool_size">5</property>
+
+        <!-- SQL dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Echo SQL для отладки тестов -->
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.use_sql_comments">false</property>
+
+        <!-- КРИТИЧНО: create-drop для изоляции тестов -->
+        <!-- Схема пересоздается перед каждым тестовым классом -->
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+
+        <!-- Disable cache для тестов -->
+        <property name="hibernate.cache.use_second_level_cache">false</property>
+        <property name="hibernate.cache.use_query_cache">false</property>
+
+        <!-- Current session context -->
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <!-- Timezone -->
+        <property name="hibernate.jdbc.time_zone">UTC</property>
+
+        <!-- Mapping -->
+        <mapping class="com.userservice.entity.UserEntity"/>
+    </session-factory>
+</hibernate-configuration>
