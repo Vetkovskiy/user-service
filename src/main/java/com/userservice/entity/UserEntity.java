@@ -104,7 +104,7 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return String.format("User{id=%d, name='%s', email='%s', age=%d, createdAt=%s}",
+        return String.format("UserEntity{id=%d, name='%s', email='%s', age=%d, createdAt=%s}",
                 id, name, email, age, createdAt);
     }
 }

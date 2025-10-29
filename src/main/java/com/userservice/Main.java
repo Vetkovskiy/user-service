@@ -28,7 +28,7 @@ public class Main {
             logger.info("Database connection established");
 
             // Создание зависимостей (manual dependency injection)
-            UserDAO userDAO = new UserDAOImpl();
+            UserDAO userDAO = new UserDAOImpl(HibernateUtil.getSessionFactory());
             UserService userService = new UserServiceImpl(userDAO);
             ConsoleInterface consoleInterface = new ConsoleInterface(userService);
 

@@ -1,7 +1,6 @@
 package com.userservice.dao;
 
 import com.userservice.entity.UserEntity;
-import com.userservice.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,8 +20,8 @@ public class UserDAOImpl implements UserDAO {
     private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
     private final SessionFactory sessionFactory;
 
-    public UserDAOImpl() {
-        this.sessionFactory = HibernateUtil.getSessionFactory();
+    public UserDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
