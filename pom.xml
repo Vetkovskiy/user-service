@@ -21,6 +21,12 @@
         <slf4j-api.version>2.0.9</slf4j-api.version>
         <HikariCP.version>5.1.0</HikariCP.version>
         <hibernate-hikaricp.version>7.1.4.Final</hibernate-hikaricp.version>
+        <mockito.version>5.20.0</mockito.version>
+        <junit-jupiter.version>5.14.0</junit-jupiter.version>
+        <junit-platform-launcher.version>1.14.0</junit-platform-launcher.version>
+        <testcontainers.core.version>2.0.1</testcontainers.core.version>
+        <testcontainers.version>1.21.3</testcontainers.version>
+        <assertj-core.version>3.25.1</assertj-core.version>
     </properties>
 
     <dependencies>
@@ -76,7 +82,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.14.0</version>
+            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -84,7 +90,7 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
-            <version>1.14.0</version>
+            <version>${junit-platform-launcher.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -92,7 +98,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.20.0</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -100,7 +106,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.20.0</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -108,7 +114,7 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>2.0.1</version>
+            <version>${testcontainers.core.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -116,7 +122,7 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.21.3</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -124,7 +130,7 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>1.21.3</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -132,7 +138,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.25.1</version>
+            <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -149,24 +155,40 @@
                 </configuration>
             </plugin>
 
-            <!-- Surefire plugin для запуска тестов -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Surefire plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>3.5.4</version>
                 <configuration>
                     <!-- Разделение unit и integration тестов -->
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
+                    <argLine>
+                        -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
+                        -Xshare:off
+                    </argLine>
                 </configuration>
             </plugin>
 
-            <!-- Failsafe plugin для интеграционных тестов (опционально) -->
+            <!-- Failsafe plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>3.5.4</version>
                 <configuration>
                     <includes>
                         <include>**/*IT.java</include>

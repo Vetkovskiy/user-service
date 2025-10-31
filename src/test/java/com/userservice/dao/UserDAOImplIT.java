@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * Интеграционные тесты для UserDAOImpl
  */
 @DisplayName("UserDAO Integration Tests")
-class UserDAOImplTest extends BaseIntegrationTest {
+class UserDAOImplIT extends BaseIntegrationTest {
 
     private UserDAO userDAO;
 
@@ -72,7 +72,7 @@ class UserDAOImplTest extends BaseIntegrationTest {
 
         // When & Then
         assertThatThrownBy(() -> userDAO.create(user2))
-            .isInstanceOf(RuntimeException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     // ========== READ TESTS ==========
