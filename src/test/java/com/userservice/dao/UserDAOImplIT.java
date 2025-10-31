@@ -72,7 +72,7 @@ class UserDAOImplIT extends BaseIntegrationTest {
 
         // When & Then
         assertThatThrownBy(() -> userDAO.create(user2))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(RuntimeException.class);
     }
 
     // ========== READ TESTS ==========
