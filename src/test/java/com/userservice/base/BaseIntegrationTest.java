@@ -19,12 +19,12 @@ public class BaseIntegrationTest {
      */
     @SuppressWarnings("resource")
     @Container
-    protected static final PostgreSQLContainer<?> postgresContainer = 
-        new PostgreSQLContainer<>("postgres:15-alpine")
-            .withDatabaseName("testdb")
-            .withUsername("test")
-            .withPassword("test")
-            .withReuse(false);  // false для изоляции между запусками
+    protected static final PostgreSQLContainer<?> postgresContainer =
+            new PostgreSQLContainer<>("postgres:15-alpine")
+                    .withDatabaseName("testdb")
+                    .withUsername("test")
+                    .withPassword("test")
+                    .withReuse(false);  // false для изоляции между запусками
 
     protected static SessionFactory sessionFactory;
 
@@ -52,17 +52,17 @@ public class BaseIntegrationTest {
     private SessionFactory createSessionFactory() {
         try {
             Configuration configuration = new Configuration();
-            
+
             // Загрузка базовой конфигурации из hibernate-test.cfg.xml
             configuration.configure("hibernate-test.cfg.xml");
-            
+
             //Переопределение параметров подключения из контейнера
             configuration.setProperty("hibernate.hikari.dataSource.url", postgresContainer.getJdbcUrl());
             configuration.setProperty("hibernate.hikari.dataSource.user", postgresContainer.getUsername());
             configuration.setProperty("hibernate.hikari.dataSource.password", postgresContainer.getPassword());
-            
+
             return configuration.buildSessionFactory();
-            
+
         } catch (Exception e) {
             throw new RuntimeException("Failed to create test SessionFactory", e);
         }

@@ -86,8 +86,8 @@ class UserServiceImplTest {
     void testCreateUser_NullName_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.createUser(null, "test@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Name cannot be empty");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Name cannot be empty");
 
         verify(userDAO, never()).create(any(UserEntity.class));
     }
@@ -97,8 +97,8 @@ class UserServiceImplTest {
     void testCreateUser_EmptyName_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.createUser("   ", "test@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Name cannot be empty");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Name cannot be empty");
 
         verify(userDAO, never()).create(any(UserEntity.class));
     }
@@ -111,8 +111,8 @@ class UserServiceImplTest {
 
         // When & Then
         assertThatThrownBy(() -> userService.createUser(longName, "test@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Name cannot exceed 100 characters");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Name cannot exceed 100 characters");
 
         verify(userDAO, never()).create(any(UserEntity.class));
     }
@@ -122,8 +122,8 @@ class UserServiceImplTest {
     void testCreateUser_NullEmail_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.createUser("John", null, 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Email cannot be empty");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Email cannot be empty");
 
         verify(userDAO, never()).create(any(UserEntity.class));
     }
@@ -133,8 +133,8 @@ class UserServiceImplTest {
     void testCreateUser_InvalidEmail_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.createUser("John", "invalid-email", 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Invalid email format");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid email format");
 
         verify(userDAO, never()).create(any(UserEntity.class));
     }
@@ -147,8 +147,8 @@ class UserServiceImplTest {
 
         // When & Then
         assertThatThrownBy(() -> userService.createUser("John", longEmail, 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Email cannot exceed 150 characters");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Email cannot exceed 150 characters");
 
         verify(userDAO, never()).create(any(UserEntity.class));
     }
@@ -161,8 +161,8 @@ class UserServiceImplTest {
 
         // When & Then
         assertThatThrownBy(() -> userService.createUser("John", "existing@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("already exists");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("already exists");
 
         verify(userDAO, times(1)).existsByEmail("existing@example.com");
         verify(userDAO, never()).create(any(UserEntity.class));
@@ -173,8 +173,8 @@ class UserServiceImplTest {
     void testCreateUser_NegativeAge_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.createUser("John", "john@example.com", -1))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Age must be between 0 and 150");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Age must be between 0 and 150");
 
         verify(userDAO, never()).create(any(UserEntity.class));
     }
@@ -184,8 +184,8 @@ class UserServiceImplTest {
     void testCreateUser_AgeTooHigh_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.createUser("John", "john@example.com", 151))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Age must be between 0 and 150");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Age must be between 0 and 150");
 
         verify(userDAO, never()).create(any(UserEntity.class));
     }
@@ -199,11 +199,11 @@ class UserServiceImplTest {
 
         // When & Then - age = 0
         assertThatCode(() -> userService.createUser("Young", "young@example.com", 0))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
 
         // When & Then - age = 150
         assertThatCode(() -> userService.createUser("Old", "old@example.com", 150))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
 
         verify(userDAO, times(2)).create(any(UserEntity.class));
     }
@@ -244,8 +244,8 @@ class UserServiceImplTest {
     void testGetUserById_NullId_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.getUserById(null))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("User ID must be positive");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("User ID must be positive");
 
         verify(userDAO, never()).findById(any());
     }
@@ -255,8 +255,8 @@ class UserServiceImplTest {
     void testGetUserById_NegativeId_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.getUserById(-1L))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("User ID must be positive");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("User ID must be positive");
 
         verify(userDAO, never()).findById(any());
     }
@@ -266,8 +266,8 @@ class UserServiceImplTest {
     void testGetUserById_ZeroId_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.getUserById(0L))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("User ID must be positive");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("User ID must be positive");
 
         verify(userDAO, never()).findById(any());
     }
@@ -292,8 +292,8 @@ class UserServiceImplTest {
     void testGetUserByEmail_EmptyEmail_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.getUserByEmail(""))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Email cannot be empty");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Email cannot be empty");
 
         verify(userDAO, never()).findByEmail(any());
     }
@@ -385,8 +385,8 @@ class UserServiceImplTest {
 
         // When & Then
         assertThatThrownBy(() -> userService.updateUser(1L, "Test", "existing@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("already exists");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("already exists");
 
         verify(userDAO, never()).update(any(UserEntity.class));
     }
@@ -399,8 +399,8 @@ class UserServiceImplTest {
 
         // When & Then
         assertThatThrownBy(() -> userService.updateUser(999L, "Test", "test@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("not found");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("not found");
 
         verify(userDAO, never()).update(any(UserEntity.class));
     }
@@ -410,8 +410,8 @@ class UserServiceImplTest {
     void testUpdateUser_NullId_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.updateUser(null, "Test", "test@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("User ID must be positive");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("User ID must be positive");
 
         verify(userDAO, never()).update(any(UserEntity.class));
     }
@@ -424,8 +424,8 @@ class UserServiceImplTest {
 
         // When & Then
         assertThatThrownBy(() -> userService.updateUser(1L, "", "test@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("Name cannot be empty");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Name cannot be empty");
 
         verify(userDAO, never()).update(any(UserEntity.class));
     }
@@ -465,8 +465,8 @@ class UserServiceImplTest {
     void testDeleteUser_NullId_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.deleteUser(null))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("User ID must be positive");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("User ID must be positive");
 
         verify(userDAO, never()).delete(any());
     }
@@ -476,8 +476,8 @@ class UserServiceImplTest {
     void testDeleteUser_NegativeId_ShouldThrowException() {
         // When & Then
         assertThatThrownBy(() -> userService.deleteUser(-1L))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("User ID must be positive");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("User ID must be positive");
 
         verify(userDAO, never()).delete(any());
     }
@@ -493,16 +493,16 @@ class UserServiceImplTest {
 
         // When & Then
         assertThatCode(() -> userService.createUser("Test", "simple@example.com", 30))
-            .doesNotThrowAnyException();
-        
+                .doesNotThrowAnyException();
+
         assertThatCode(() -> userService.createUser("Test", "with+plus@example.com", 30))
-            .doesNotThrowAnyException();
-        
+                .doesNotThrowAnyException();
+
         assertThatCode(() -> userService.createUser("Test", "with.dot@example.com", 30))
-            .doesNotThrowAnyException();
-        
+                .doesNotThrowAnyException();
+
         assertThatCode(() -> userService.createUser("Test", "with_underscore@example.com", 30))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
 
         verify(userDAO, times(4)).create(any(UserEntity.class));
     }
@@ -512,16 +512,16 @@ class UserServiceImplTest {
     void testEmailValidation_InvalidFormats_ShouldFail() {
         // When & Then
         assertThatThrownBy(() -> userService.createUser("Test", "invalidemail.com", 30))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
 
         assertThatThrownBy(() -> userService.createUser("Test", "test@", 30))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
 
         assertThatThrownBy(() -> userService.createUser("Test", "@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
 
         assertThatThrownBy(() -> userService.createUser("Test", "test @example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
 
         verify(userDAO, never()).create(any(UserEntity.class));
     }
@@ -549,7 +549,7 @@ class UserServiceImplTest {
     void testCreateUser_ValidationFails_ShouldNotCallDAO() {
         // When & Then
         assertThatThrownBy(() -> userService.createUser("", "test@example.com", 30))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
 
         verifyNoInteractions(userDAO);
     }

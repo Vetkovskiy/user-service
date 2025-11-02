@@ -72,7 +72,7 @@ class UserDAOImplIT extends BaseIntegrationTest {
 
         // When & Then
         assertThatThrownBy(() -> userDAO.create(user2))
-            .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(RuntimeException.class);
     }
 
     // ========== READ TESTS ==========
@@ -143,7 +143,7 @@ class UserDAOImplIT extends BaseIntegrationTest {
         // Then
         assertThat(users).hasSize(3);
         assertThat(users).extracting(UserEntity::getEmail)
-            .containsExactlyInAnyOrder("user1@example.com", "user2@example.com", "user3@example.com");
+                .containsExactlyInAnyOrder("user1@example.com", "user2@example.com", "user3@example.com");
     }
 
     @Test
@@ -320,6 +320,6 @@ class UserDAOImplIT extends BaseIntegrationTest {
         List<UserEntity> users = userDAO.findAll();
         assertThat(users).hasSize(2);
         assertThat(users).extracting(UserEntity::getName)
-            .containsExactlyInAnyOrder("Updated User1", "Updated User2");
+                .containsExactlyInAnyOrder("Updated User1", "Updated User2");
     }
 }
